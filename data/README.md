@@ -1,8 +1,29 @@
-# Data
+# 데이터
 
-`sample_traffic.csv` is synthetic and only exists for local testing.
+이 디렉터리는 나이브 베이즈 기반 네트워크 Recon 탐지 실험에 사용할
+트래픽 데이터를 보관하는 공간입니다.
 
-Recommended structure for real datasets:
+`sample_traffic.csv`는 파이프라인 동작 확인용으로 만든 합성 데이터입니다.
+실제 성능을 평가하기 위한 데이터가 아니며, 학습/예측 코드가 정상적으로
+동작하는지 확인하는 용도로만 사용합니다.
+
+## 데이터 설계 요약
+
+이 프로젝트는 공격자의 정보수집 단계에서 발생하는 트래픽을 분류하는 것을
+목표로 합니다. Nmap, Masscan, DIRB, Nikto, DNSenum 같은 도구는 다수의 포트
+탐색, 짧은 시간의 반복 요청, 높은 실패 응답 비율, DNS 조회 실패 증가 같은
+흔적을 남길 수 있습니다.
+
+모델 입력은 원시 패킷보다 플로우와 메타데이터 중심으로 구성하는 것이 좋습니다.
+예를 들어 `duration`, `protocol`, `service`, `packet_count`, `src_bytes`,
+`dst_bytes`, 실패 비율, 고유 목적지 포트 수, HTTP 404 비율, DNS NXDOMAIN 비율
+같은 특징을 사용할 수 있습니다.
+
+공개 데이터셋은 초기 실험용으로만 사용하고, 실제 적용 전에는 운영 환경과
+가까운 자체 캡처 데이터로 다시 검증해야 합니다. 공개 데이터셋은 라벨 품질,
+수집 환경, 클래스 불균형 문제가 있을 수 있습니다.
+
+## 권장 디렉터리 구조
 
 ```text
 data/
@@ -12,5 +33,6 @@ data/
 └── external/
 ```
 
-Keep large or license-restricted datasets out of Git. Place them under `data/raw/`
-or `data/external/`, which are ignored by `.gitignore`.
+대용량 데이터나 라이선스 제한이 있는 데이터는 Git에 포함하지 않습니다.
+이런 파일은 `.gitignore`에 의해 제외되는 `data/raw/` 또는 `data/external/`에
+보관합니다.
