@@ -1,20 +1,4 @@
-.DS_Store
-.venv/
-__pycache__/
-*.py[cod]
-*.egg-info/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*
 
-# Local outputs
-artifacts/
-reports/
-predictions.csv
-
-# Keep raw datasets local unless you intentionally publish them.
-data/raw/
-data/external/
-
-# Notebook checkpoints
-.ipynb_checkpoints/
+.venv
